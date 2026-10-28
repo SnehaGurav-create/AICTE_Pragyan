@@ -13,10 +13,12 @@ export const PROTOTYPE_METADATA = {
   disclaimer: "Automated findings are preliminary indicators. Statutory scrutiny, required inspections and final regulatory decisions remain with authorized AICTE officials.",
 };
 
-// 6 Consistent Prototype Applications
+// 6 Consistent Prototype Applications with Explicit Ownership & Officer Assignment
+// Blueprint Matrix: "Own" = institution's records; "Assigned" = officer's allocated cases
 export const DEMO_APPLICATIONS = [
   {
     id: "AICTE-2026-NRO-8841",
+    institutionId: "AICTE-2026-NRO-8841",
     name: "Apex Institute of Advanced Technology & Research",
     city: "Bhopal, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -29,9 +31,20 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "Cadre ratio short 1 Professor in CSE Department",
     featured: true,
     complianceScore: 94.8,
+    assignedVerificationOfficer: "USR-VERIF-03", // Er. Vikram Anand
+    assignedScrutinyOfficer: "USR-SCRUTINY-04",     // Dr. Rajesh Verma
+    assignedApprovingOfficer: "USR-APPROVER-05",    // Shri K. M. Subramanian, IAS
+    isDecisionReady: true,
+    overlapConflictDetail: {
+      facultyName: "Dr. Amiteshwar Sharma",
+      conflictCollege: "Malwa Institute of Engineering & Applied Science",
+      distanceKm: 192,
+      conflictType: "Dual Full-Time Biometric Punch Collision"
+    }
   },
   {
     id: "AICTE-2026-WRO-4201",
+    institutionId: "AICTE-2026-WRO-4201",
     name: "Malwa Institute of Engineering & Applied Science",
     city: "Indore, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -44,9 +57,14 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "None • Preliminary validation checks satisfied",
     featured: false,
     complianceScore: 98.6,
+    assignedVerificationOfficer: "USR-VERIF-03",
+    assignedScrutinyOfficer: "USR-SCRUTINY-04",
+    assignedApprovingOfficer: "USR-APPROVER-05",
+    isDecisionReady: true,
   },
   {
     id: "AICTE-2026-CRO-9102",
+    institutionId: "AICTE-2026-CRO-9102",
     name: "Vindhya College of Engineering & Research",
     city: "Rewa, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -59,9 +77,14 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "None • Unencumbered land and safety NOC validated",
     featured: false,
     complianceScore: 100.0,
+    assignedVerificationOfficer: "USR-VERIF-03",
+    assignedScrutinyOfficer: "USR-SCRUTINY-99", // Assigned to different scrutiny officer
+    assignedApprovingOfficer: "USR-APPROVER-05",
+    isDecisionReady: true,
   },
   {
     id: "AICTE-2026-NRO-7729",
+    institutionId: "AICTE-2026-NRO-7729",
     name: "Satpura Institute of Artificial Intelligence",
     city: "Jabalpur, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -74,9 +97,14 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "Fire Safety NOC expired on 14-Aug-2026; Renewal pending",
     featured: false,
     complianceScore: 78.2,
+    assignedVerificationOfficer: "USR-VERIF-99", // Assigned to different verification officer
+    assignedScrutinyOfficer: "USR-SCRUTINY-04",
+    assignedApprovingOfficer: "USR-APPROVER-05",
+    isDecisionReady: false,
   },
   {
     id: "AICTE-2026-NRO-6311",
+    institutionId: "AICTE-2026-NRO-6311",
     name: "Bhopal Royal Academy of Technical Studies",
     city: "Bhopal, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -89,9 +117,14 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "Sub-Registrar encumbrance certificate requires clarification",
     featured: false,
     complianceScore: 91.4,
+    assignedVerificationOfficer: "USR-VERIF-03",
+    assignedScrutinyOfficer: "USR-SCRUTINY-04",
+    assignedApprovingOfficer: "USR-APPROVER-05",
+    isDecisionReady: false,
   },
   {
     id: "AICTE-2026-NRO-5510",
+    institutionId: "AICTE-2026-NRO-5510",
     name: "Narmada Valley Institute of Technology",
     city: "Hoshangabad, Madhya Pradesh",
     region: "Northern Regional Office (NRO)",
@@ -104,6 +137,10 @@ export const DEMO_APPLICATIONS = [
     pendingIssues: "Governing body resolution verification pending",
     featured: false,
     complianceScore: 82.0,
+    assignedVerificationOfficer: "USR-VERIF-99",
+    assignedScrutinyOfficer: "USR-SCRUTINY-99",
+    assignedApprovingOfficer: "USR-APPROVER-05",
+    isDecisionReady: false,
   },
 ];
 

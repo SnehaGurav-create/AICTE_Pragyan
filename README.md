@@ -49,6 +49,7 @@
 - [Tech Stack](#-tech-stack)
 - [Unified Repository Structure](#-unified-repository-structure)
 - [Quick Start Guide](#-quick-start-guide)
+- [Deploy the Full-Stack App](#-deploy-the-full-stack-app)
 - [Interactive GUI Testing Guide](#-interactive-gui-testing-guide)
 - [API Reference](#-api-reference)
 - [Mandatory SIH Evaluation Benchmarks](#-mandatory-sih-evaluation-benchmarks)
@@ -227,6 +228,53 @@ npm install
 npm run dev
 ```
 * **Frontend Cockpit**: <http://localhost:5173>
+
+---
+
+## ☁️ Deploy the Full-Stack App
+
+The unified `main` branch contains both services. Deploy the frontend and backend separately, then connect them with the frontend's build-time API URL.
+
+### 1. Deploy the backend on Render
+
+Create a **Web Service** from this GitHub repository and configure:
+
+| Setting | Value |
+|---|---|
+| Branch | `main` |
+| Root Directory | `Backend` |
+| Runtime | Python |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+
+After deployment, verify `https://YOUR-RENDER-SERVICE.onrender.com/api/v1/health` returns a healthy response. Use the service's base URL (without a path or trailing slash) in the frontend configuration.
+
+### 2. Deploy the frontend on Vercel
+
+Import the same GitHub repository and configure:
+
+| Setting | Value |
+|---|---|
+| Production Branch | `main` |
+| Root Directory | `Frontend` |
+| Framework Preset | Vite |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+Add this Vercel environment variable for the deployment environments you use:
+
+```text
+VITE_API_BASE_URL=https://YOUR-RENDER-SERVICE.onrender.com
+```
+
+Vite embeds `VITE_` variables during the build, so redeploy after changing the value. The frontend falls back to local demo data if the API is unavailable.
+
+### Prototype deployment cautions
+
+- The backend keeps application state in memory and stores uploaded/generated files in its local `Backend/uploads` directory. These are not durable across service restarts or redeployments. Use durable storage and a persistent database before relying on saved records or uploaded documents.
+- CORS is currently configured permissively for a prototype. Restrict allowed origins to the deployed frontend URL before exposing a production service.
+- Do not upload real, confidential, or personally identifiable documents to a public demo deployment. Verification results and regulatory decisions are illustrative decision-support outputs, not official determinations.
+- Render's free service may sleep when idle, so the first request after inactivity can take longer.
 
 ---
 

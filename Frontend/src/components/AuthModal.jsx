@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import {
   ShieldCheck,
-  Building,
-  UserCheck,
-  Scale,
   Lock,
   Mail,
   Key,
   X,
   ArrowRight,
-  CheckCircle2,
   AlertCircle,
-  Bell,
   Sparkles,
 } from 'lucide-react';
 
@@ -254,102 +249,26 @@ export function AuthModal() {
           {/* TAB 1: 1-CLICK ROLE LOGIN */}
           {activeTab === 'quick' && (
             <div>
-              <p style={{ fontSize: '0.82rem', color: '#64748b', margin: '0 0 16px 0', lineHeight: 1.5 }}>
-                Select a user persona below to instantly experience the role-specific workspace, tailored permissions, and filtered real-time notification radar:
-              </p>
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '10px 14px', marginBottom: '14px', fontSize: '0.78rem', color: '#475569', lineHeight: 1.5 }}>
+                <strong style={{ color: '#0f2b48' }}>Statutory Separation of Roles:</strong> AI flags anomalies, but human officers verify, scrutinize, and make final decisions. Select a human role persona below to experience their dedicated workspace and permission boundaries:
+              </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {/* Role 1: Scrutiny Officer */}
-                <div
-                  onClick={() => handleQuickRole('OFFICER')}
-                  style={{
-                    border: currentUser?.role === 'OFFICER' ? '2px solid #3b82f6' : '1px solid #e2e8f0',
-                    background: currentUser?.role === 'OFFICER' ? '#eff6ff' : '#ffffff',
-                    padding: '16px',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    justifyContent: 'space-between',
-                  }}
-                  className="role-card-hover"
-                >
-                  <div style={{ display: 'flex', gap: '14px' }}>
-                    <div
-                      style={{
-                        width: '42px',
-                        height: '42px',
-                        borderRadius: '8px',
-                        background: '#dbeafe',
-                        color: '#1d4ed8',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '1.3rem',
-                        flexShrink: 0,
-                      }}
-                    >
-                      👔
-                    </div>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f2b48' }}>
-                          Dr. Siddhi Patil
-                        </span>
-                        <span
-                          style={{
-                            background: '#3b82f6',
-                            color: '#ffffff',
-                            fontSize: '0.65rem',
-                            fontWeight: 800,
-                            padding: '2px 8px',
-                            borderRadius: '999px',
-                          }}
-                        >
-                          SCRUTINY OFFICER
-                        </span>
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '2px' }}>
-                        Senior Technical Scrutiny Officer • Northern Regional Office (NRO)
-                      </div>
-                      <div style={{ fontSize: '0.73rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>
-                        <strong>Permissions:</strong> Tamper/ELA forensic checks, ghost faculty radar, cross-document correlation, and official scrutiny dossier PDF export.
-                      </div>
-                      <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
-                        <span style={{ background: '#fee2e2', color: '#b91c1c', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          🚨 3 Critical Fraud/Vigilance Alerts
-                        </span>
-                        <span style={{ background: '#e0f2fe', color: '#0369a1', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          📑 Full Scrutiny Cockpit
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="btn-primary"
-                    style={{
-                      padding: '6px 14px',
-                      fontSize: '0.75rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span>{currentUser?.role === 'OFFICER' ? 'Active' : 'Login'}</span>
-                    <ArrowRight size={13} />
-                  </button>
+              {/* Service Role Callout */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#f1f5f9', border: '1px dashed #cbd5e1', borderRadius: '8px', padding: '8px 12px', marginBottom: '14px', fontSize: '0.74rem', color: '#334155' }}>
+                <span style={{ fontSize: '1.1rem' }}>⚡</span>
+                <div>
+                  <strong>Role 2 — AI Validation Engine:</strong> System service (automated background processor, not a human login). Runs OCR, rule evaluations, overlap checks, and anomaly flags into officer queues.
                 </div>
+              </div>
 
-                {/* Role 2: College Principal / Applicant */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {/* Role 1: College Representative / Applicant */}
                 <div
                   onClick={() => handleQuickRole('INSTITUTION')}
                   style={{
                     border: currentUser?.role === 'INSTITUTION' ? '2px solid #10b981' : '1px solid #e2e8f0',
                     background: currentUser?.role === 'INSTITUTION' ? '#ecfdf5' : '#ffffff',
-                    padding: '16px',
+                    padding: '14px',
                     borderRadius: '10px',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -359,18 +278,18 @@ export function AuthModal() {
                   }}
                   className="role-card-hover"
                 >
-                  <div style={{ display: 'flex', gap: '14px' }}>
+                  <div style={{ display: 'flex', gap: '12px' }}>
                     <div
                       style={{
-                        width: '42px',
-                        height: '42px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '8px',
                         background: '#d1fae5',
                         color: '#047857',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.3rem',
+                        fontSize: '1.25rem',
                         flexShrink: 0,
                       }}
                     >
@@ -378,35 +297,27 @@ export function AuthModal() {
                     </div>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f2b48' }}>
-                          Prof. Sanmit Patil
+                        <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f2b48' }}>
+                          Prof. Sunita Rao
                         </span>
                         <span
                           style={{
                             background: '#10b981',
                             color: '#ffffff',
-                            fontSize: '0.65rem',
+                            fontSize: '0.63rem',
                             fontWeight: 800,
                             padding: '2px 8px',
                             borderRadius: '999px',
                           }}
                         >
-                          COLLEGE APPLICANT
+                          ROLE 1 • INSTITUTION USER
                         </span>
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '2px' }}>
-                        Principal & Chairman • Apex Institute of Advanced Technology (Bhopal)
+                      <div style={{ fontSize: '0.74rem', color: '#475569', marginTop: '2px' }}>
+                        Principal & Authorized Signatory • Apex Institute of Advanced Technology (Bhopal)
                       </div>
-                      <div style={{ fontSize: '0.73rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>
-                        <strong>Permissions:</strong> View institutional approval status, review extracted facts, receive statutory show-cause memos, and upload cure undertakings.
-                      </div>
-                      <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
-                        <span style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          ⏳ Memo #DEF-8841 (15-Day Cure Clock)
-                        </span>
-                        <span style={{ background: '#dcfce7', color: '#166534', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          ✅ DigiLocker DPI Land Cleared
-                        </span>
+                      <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', lineHeight: 1.4 }}>
+                        <strong>Permitted Actions:</strong> Submits applications, uploads supporting documents, views checklist, tracks status, uploads cure undertakings without erasing history. Strict tenant isolation (cannot see other colleges or internal officer notes).
                       </div>
                     </div>
                   </div>
@@ -415,8 +326,8 @@ export function AuthModal() {
                     className="btn-primary"
                     style={{
                       background: '#10b981',
-                      padding: '6px 14px',
-                      fontSize: '0.75rem',
+                      padding: '5px 12px',
+                      fontSize: '0.74rem',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
@@ -428,13 +339,13 @@ export function AuthModal() {
                   </button>
                 </div>
 
-                {/* Role 3: Regional Director / Admin */}
+                {/* Role 3: Verification Officer */}
                 <div
-                  onClick={() => handleQuickRole('DIRECTOR')}
+                  onClick={() => handleQuickRole('VERIFICATION_OFFICER')}
                   style={{
-                    border: currentUser?.role === 'DIRECTOR' ? '2px solid #f59e0b' : '1px solid #e2e8f0',
-                    background: currentUser?.role === 'DIRECTOR' ? '#fffbeb' : '#ffffff',
-                    padding: '16px',
+                    border: currentUser?.role === 'VERIFICATION_OFFICER' ? '2px solid #0284c7' : '1px solid #e2e8f0',
+                    background: currentUser?.role === 'VERIFICATION_OFFICER' ? '#f0f9ff' : '#ffffff',
+                    padding: '14px',
                     borderRadius: '10px',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -444,18 +355,171 @@ export function AuthModal() {
                   }}
                   className="role-card-hover"
                 >
-                  <div style={{ display: 'flex', gap: '14px' }}>
+                  <div style={{ display: 'flex', gap: '12px' }}>
                     <div
                       style={{
-                        width: '42px',
-                        height: '42px',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '8px',
+                        background: '#e0f2fe',
+                        color: '#0369a1',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.25rem',
+                        flexShrink: 0,
+                      }}
+                    >
+                      🔍
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f2b48' }}>
+                          Er. Vikram Anand
+                        </span>
+                        <span
+                          style={{
+                            background: '#0284c7',
+                            color: '#ffffff',
+                            fontSize: '0.63rem',
+                            fontWeight: 800,
+                            padding: '2px 8px',
+                            borderRadius: '999px',
+                          }}
+                        >
+                          ROLE 3 • VERIFICATION OFFICER
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.74rem', color: '#475569', marginTop: '2px' }}>
+                        Digital Infrastructure & Authority Verification Officer • AICTE National Desk
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', lineHeight: 1.4 }}>
+                        <strong>Permitted Actions:</strong> Verifies documents against issuing authorities (DigiLocker, State Portals, QR, eSign). Marks Verified, Mismatch, Expired, Source Unavailable. Refers unresolved cases to Scrutiny Officer.
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    style={{
+                      background: '#0284c7',
+                      padding: '5px 12px',
+                      fontSize: '0.74rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span>{currentUser?.role === 'VERIFICATION_OFFICER' ? 'Active' : 'Login'}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+
+                {/* Role 4: Scrutiny Officer */}
+                <div
+                  onClick={() => handleQuickRole('SCRUTINY_OFFICER')}
+                  style={{
+                    border: (currentUser?.role === 'SCRUTINY_OFFICER' || currentUser?.role === 'OFFICER') ? '2px solid #3b82f6' : '1px solid #e2e8f0',
+                    background: (currentUser?.role === 'SCRUTINY_OFFICER' || currentUser?.role === 'OFFICER') ? '#eff6ff' : '#ffffff',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                  }}
+                  className="role-card-hover"
+                >
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '8px',
+                        background: '#dbeafe',
+                        color: '#1d4ed8',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.25rem',
+                        flexShrink: 0,
+                      }}
+                    >
+                      👔
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f2b48' }}>
+                          Dr. Rajesh Verma
+                        </span>
+                        <span
+                          style={{
+                            background: '#3b82f6',
+                            color: '#ffffff',
+                            fontSize: '0.63rem',
+                            fontWeight: 800,
+                            padding: '2px 8px',
+                            borderRadius: '999px',
+                          }}
+                        >
+                          ROLE 4 • SCRUTINY OFFICER
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.74rem', color: '#475569', marginTop: '2px' }}>
+                        Senior Technical Scrutiny Officer • Northern Regional Office (NRO)
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', lineHeight: 1.4 }}>
+                        <strong>Permitted Actions:</strong> Reviews dossiers, evaluates evidence behind AI anomalies, accepts/dismisses findings, issues statutory deficiency memos, forwards cases with recommendations. Cannot grant final regulatory approval.
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    style={{
+                      padding: '5px 12px',
+                      fontSize: '0.74rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span>{(currentUser?.role === 'SCRUTINY_OFFICER' || currentUser?.role === 'OFFICER') ? 'Active' : 'Login'}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+
+                {/* Role 5: Competent Authority / Approving Officer */}
+                <div
+                  onClick={() => handleQuickRole('COMPETENT_AUTHORITY')}
+                  style={{
+                    border: (currentUser?.role === 'COMPETENT_AUTHORITY' || currentUser?.role === 'DIRECTOR') ? '2px solid #f59e0b' : '1px solid #e2e8f0',
+                    background: (currentUser?.role === 'COMPETENT_AUTHORITY' || currentUser?.role === 'DIRECTOR') ? '#fffbeb' : '#ffffff',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                  }}
+                  className="role-card-hover"
+                >
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div
+                      style={{
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '8px',
                         background: '#fef3c7',
                         color: '#b45309',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.3rem',
+                        fontSize: '1.25rem',
                         flexShrink: 0,
                       }}
                     >
@@ -463,35 +527,27 @@ export function AuthModal() {
                     </div>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f2b48' }}>
-                          Ms. Sneha Gurav, IAS
+                        <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f2b48' }}>
+                          Shri K. M. Subramanian, IAS
                         </span>
                         <span
                           style={{
                             background: '#f59e0b',
                             color: '#ffffff',
-                            fontSize: '0.65rem',
+                            fontSize: '0.63rem',
                             fontWeight: 800,
                             padding: '2px 8px',
                             borderRadius: '999px',
                           }}
                         >
-                          REGIONAL DIRECTOR
+                          ROLE 5 • COMPETENT AUTHORITY
                         </span>
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '2px' }}>
-                        Regional Director & Member Secretary • AICTE National Headquarters
+                      <div style={{ fontSize: '0.74rem', color: '#475569', marginTop: '2px' }}>
+                        Regional Director & Member Secretary • AICTE Central Regulatory Bureau
                       </div>
-                      <div style={{ fontSize: '0.73rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>
-                        <strong>Permissions:</strong> Pan-India governance oversight, Approval Process Handbook (APH) dynamic rule modification, and physical inspection committee sign-offs.
-                      </div>
-                      <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
-                        <span style={{ background: '#e0f2fe', color: '#0369a1', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          🌐 All National Alerts (5 Feed Items)
-                        </span>
-                        <span style={{ background: '#f3e8ff', color: '#7e22ce', fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
-                          ⚙️ Dynamic APH Rule Engine
-                        </span>
+                      <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', lineHeight: 1.4 }}>
+                        <strong>Permitted Actions:</strong> Exclusive statutory authority to make final decisions (Grant LoA, Issue LoR, Return for re-scrutiny). Records mandatory legal rationale and provisions. AI never decides automatically.
                       </div>
                     </div>
                   </div>
@@ -500,15 +556,92 @@ export function AuthModal() {
                     className="btn-primary"
                     style={{
                       background: '#f59e0b',
-                      padding: '6px 14px',
-                      fontSize: '0.75rem',
+                      padding: '5px 12px',
+                      fontSize: '0.74rem',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
                       flexShrink: 0,
                     }}
                   >
-                    <span>{currentUser?.role === 'DIRECTOR' ? 'Active' : 'Login'}</span>
+                    <span>{(currentUser?.role === 'COMPETENT_AUTHORITY' || currentUser?.role === 'DIRECTOR') ? 'Active' : 'Login'}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+
+                {/* Role 6: System Administrator */}
+                <div
+                  onClick={() => handleQuickRole('ADMIN')}
+                  style={{
+                    border: currentUser?.role === 'ADMIN' ? '2px solid #8b5cf6' : '1px solid #e2e8f0',
+                    background: currentUser?.role === 'ADMIN' ? '#f5f3ff' : '#ffffff',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                  }}
+                  className="role-card-hover"
+                >
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '8px',
+                        background: '#ede9fe',
+                        color: '#6d28d9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.25rem',
+                        flexShrink: 0,
+                      }}
+                    >
+                      ⚙️
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f2b48' }}>
+                          Ms. Neha Sharma
+                        </span>
+                        <span
+                          style={{
+                            background: '#8b5cf6',
+                            color: '#ffffff',
+                            fontSize: '0.63rem',
+                            fontWeight: 800,
+                            padding: '2px 8px',
+                            borderRadius: '999px',
+                          }}
+                        >
+                          ROLE 6 • SYSTEM ADMINISTRATOR
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.74rem', color: '#475569', marginTop: '2px' }}>
+                        Chief Platform & Security Administrator • AICTE e-Governance Division
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', lineHeight: 1.4 }}>
+                        <strong>Permitted Actions:</strong> Manages user accounts, permissions, configurable validation rules with versioning, API and OCR pipeline health, and immutable audit logs. No regulatory decision authority.
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    style={{
+                      background: '#8b5cf6',
+                      padding: '5px 12px',
+                      fontSize: '0.74rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span>{currentUser?.role === 'ADMIN' ? 'Active' : 'Login'}</span>
                     <ArrowRight size={13} />
                   </button>
                 </div>

@@ -140,20 +140,30 @@ def run_tests():
     except Exception as e:
         print(f"[FAIL] [8/8] Ghost Faculty Sentinel Failed: {e}")
 
-    # Test 9: Role-Based Authentication (RBAC) & Role-Filtered Notifications
+    # Test 9: 6-Role Role-Based Authentication (RBAC) & Role-Filtered Notifications
     try:
         users_res = client.get("/api/v1/auth/users")
-        assert users_res.status_code == 200 and len(users_res.json()) >= 3
+        assert users_res.status_code == 200 and len(users_res.json()) >= 5
         
-        # Test Officer Login
-        officer_login = client.post("/api/v1/auth/login", json={"role": "OFFICER"})
+        # Test Scrutiny Officer Login
+        officer_login = client.post("/api/v1/auth/login", json={"role": "SCRUTINY_OFFICER"})
         assert officer_login.status_code == 200
-        assert officer_login.json()["user"]["role"] == "OFFICER"
+        assert officer_login.json()["user"]["role"] in ["OFFICER", "SCRUTINY_OFFICER"]
         
         # Test Institution Login
         inst_login = client.post("/api/v1/auth/login", json={"role": "INSTITUTION"})
         assert inst_login.status_code == 200
         assert inst_login.json()["user"]["role"] == "INSTITUTION"
+
+        # Test Verification Officer Login
+        verif_login = client.post("/api/v1/auth/login", json={"role": "VERIFICATION_OFFICER"})
+        assert verif_login.status_code == 200
+        assert verif_login.json()["user"]["role"] == "VERIFICATION_OFFICER"
+
+        # Test Competent Authority Login
+        approver_login = client.post("/api/v1/auth/login", json={"role": "COMPETENT_AUTHORITY"})
+        assert approver_login.status_code == 200
+        assert approver_login.json()["user"]["role"] in ["DIRECTOR", "COMPETENT_AUTHORITY"]
         
         # Test Notification Filtering by Role
         officer_notifs = client.get("/api/v1/notifications?role=OFFICER")
@@ -166,9 +176,12 @@ def run_tests():
         for n in inst_notifs.json():
             assert n["targetRole"] in ["INSTITUTION", "ALL"]
             
-        print("[PASS] [9/9] RBAC Authentication & Role-Filtered Notifications")
-        print("       - Officer Persona: Dr. Rajesh Verma (Vigilance & Tamper Alerts)")
-        print("       - Institution Persona: Prof. Sunita Rao (Statutory Cure Memos & DPI Status)")
+        print("[PASS] [9/9] RBAC Authentication & Role-Filtered Notifications (6-Role Architecture)")
+        print("       - Role 1 (Institution): Prof. Sunita Rao (Statutory Cure Memos & DPI Status)")
+        print("       - Role 3 (Verification Officer): Er. Vikram Anand (Official Authority & QR Desk)")
+        print("       - Role 4 (Scrutiny Officer): Dr. Rajesh Verma (Vigilance & Tamper Alerts)")
+        print("       - Role 5 (Competent Authority): Shri K. M. Subramanian, IAS (Exclusive Approver)")
+        print("       - Role 6 (System Admin): Ms. Neha Sharma (Rules & Health Config)")
         passed += 1
     except Exception as e:
         print(f"[FAIL] [9/9] RBAC Auth Failed: {e}")

@@ -4,10 +4,10 @@ import { fetchAuthUsers, loginUser } from '../services/api';
 const AuthContext = createContext(null);
 
 export const DEFAULT_OFFICER = {
-  id: "USR-OFFICER-01",
-  username: "officer@aicte.gov.in",
+  id: "USR-SCRUTINY-04",
+  username: "scrutiny@aicte.gov.in",
   name: "Dr. Rajesh Verma",
-  role: "OFFICER",
+  role: "SCRUTINY_OFFICER",
   roleLabel: "AICTE Scrutiny Officer",
   designation: "Senior Technical Scrutiny Officer",
   organization: "Northern Regional Office (NRO), Kanpur / Bhopal",
@@ -16,14 +16,8 @@ export const DEFAULT_OFFICER = {
 };
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('pragyan_auth_user');
-      return saved ? JSON.parse(saved) : DEFAULT_OFFICER;
-    } catch {
-      return DEFAULT_OFFICER;
-    }
-  });
+  // Always start unauthenticated — landing page displays first on every launch
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [availableUsers, setAvailableUsers] = useState([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -70,21 +64,23 @@ export function AuthProvider({ children }) {
   // Standard Username / Password Login
   const loginWithCredentials = async (username, password) => {
     const res = await loginUser({ username, password });
-    if (res && res.user) {
+    if (res && res.success && res.user) {
       setCurrentUser(res.user);
       if (res.unreadNotificationsCount !== undefined) {
         setUnreadNotifCount(res.unreadNotificationsCount);
       }
-      setAuthFeedback(`Welcome, ${res.user.name}`);
+      setAuthFeedback(`Welcome, ${res.user.name} (${res.user.roleLabel})`);
       setTimeout(() => setAuthFeedback(null), 3500);
       setIsAuthModalOpen(false);
       return { success: true, user: res.user };
     }
-    return { success: false, error: 'Authentication failed' };
+    return { success: false, error: res?.error || 'Authentication failed' };
   };
 
   const logout = () => {
     setCurrentUser(null);
+    // Explicitly clear persisted session so landing page shows on next visit
+    try { localStorage.removeItem('pragyan_auth_user'); } catch {}
     setAuthFeedback('Signed out from AICTE Regulatory Bureau');
     setTimeout(() => setAuthFeedback(null), 3000);
   };

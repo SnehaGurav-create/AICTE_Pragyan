@@ -404,50 +404,99 @@ NOTIFICATIONS_DB = [
     }
 ]
 
-# AICTE Role-Based Access Control (RBAC) User Personas
+# AICTE Role-Based Access Control (RBAC) 6-Role Architecture & User Personas
+# Statutory Separation: Document Validation (AI) -> Source Verification -> Regulatory Scrutiny -> Competent Approval
 USERS_DB = [
     {
-        "id": "USR-OFFICER-01",
-        "username": "officer@aicte.gov.in",
-        "password": "aicte@officer2026",
+        "id": "USR-INST-01",
+        "username": "principal@apex.edu.in",
+        "password": "apex@principal2026",
+        "name": "Prof. Sunita Rao",
+        "role": "INSTITUTION",
+        "roleLabel": "Institution User (College Principal)",
+        "designation": "Principal & Authorized Signatory",
+        "organization": "Apex Institute of Advanced Technology & Research (Bhopal)",
+        "institutionId": "AICTE-2026-NRO-8841",
+        "avatar": "🏛️",
+        "badgeColor": "#10b981",
+        "allowedModules": ["overview", "documents", "compliance", "alerts"],
+        "notificationsRole": "INSTITUTION",
+        "description": "College representative who submits applications, uploads documents, corrects deficiencies, and tracks status."
+    },
+    {
+        "id": "SVC-AI-ENGINE",
+        "username": "system-worker@aicte.internal",
+        "password": "service-token-internal-only",
+        "name": "AI Validation Engine",
+        "role": "AI_ENGINE",
+        "roleLabel": "AI Validation Engine (System Service)",
+        "designation": "Automated Processing Service (Non-human)",
+        "organization": "AICTE Automated Pre-Scrutiny Subsystem",
+        "avatar": "⚡",
+        "badgeColor": "#6366f1",
+        "allowedModules": [],
+        "notificationsRole": "NONE",
+        "description": "Background service performing OCR, rule checks, cross-document comparisons, overlap detection, and anomaly analysis."
+    },
+    {
+        "id": "USR-VERIF-03",
+        "username": "verification@aicte.gov.in",
+        "password": "aicte@verif2026",
+        "name": "Er. Vikram Anand",
+        "role": "VERIFICATION_OFFICER",
+        "roleLabel": "Verification Officer",
+        "designation": "Digital Infrastructure & Authority Verification Officer",
+        "organization": "AICTE National Verification Cell / DigiLocker Desk",
+        "avatar": "🔍",
+        "badgeColor": "#0284c7",
+        "allowedModules": ["overview", "authority", "documents", "audit"],
+        "notificationsRole": "VERIFICATION",
+        "description": "Checks documents against authorized issuing-authority sources, QR codes, digital signatures, and official portals."
+    },
+    {
+        "id": "USR-SCRUTINY-04",
+        "username": "scrutiny@aicte.gov.in",
+        "password": "aicte@scrutiny2026",
         "name": "Dr. Rajesh Verma",
-        "role": "OFFICER",
+        "role": "SCRUTINY_OFFICER",
         "roleLabel": "AICTE Scrutiny Officer",
         "designation": "Senior Technical Scrutiny Officer",
         "organization": "Northern Regional Office (NRO), Kanpur / Bhopal",
         "avatar": "👔",
         "badgeColor": "#3b82f6",
         "allowedModules": ["overview", "applications", "documents", "authority", "compliance", "alerts", "audit"],
-        "notificationsRole": "OFFICER"
+        "notificationsRole": "OFFICER",
+        "description": "Reviews validation reports, supporting evidence, regulatory checklist, faculty overlap alerts, and infrastructure discrepancies."
     },
     {
-        "id": "USR-INST-02",
-        "username": "principal@apex.edu.in",
-        "password": "apex@principal2026",
-        "name": "Prof. Sunita Rao",
-        "role": "INSTITUTION",
-        "roleLabel": "College Principal / Applicant",
-        "designation": "Principal & Chairman (Admissions)",
-        "organization": "Apex Institute of Advanced Technology & Research (Bhopal)",
-        "institutionId": "AICTE-2026-NRO-8841",
-        "avatar": "🏛️",
-        "badgeColor": "#10b981",
-        "allowedModules": ["overview", "documents", "compliance", "alerts"],
-        "notificationsRole": "INSTITUTION"
-    },
-    {
-        "id": "USR-DIR-03",
-        "username": "director@aicte.gov.in",
-        "password": "aicte@director2026",
+        "id": "USR-APPROVER-05",
+        "username": "approver@aicte.gov.in",
+        "password": "aicte@approver2026",
         "name": "Shri K. M. Subramanian, IAS",
-        "role": "DIRECTOR",
-        "roleLabel": "AICTE Regional Director",
+        "role": "COMPETENT_AUTHORITY",
+        "roleLabel": "Competent Authority / Approving Officer",
         "designation": "Regional Director & Member Secretary",
         "organization": "AICTE Central Bureau, New Delhi",
         "avatar": "⚖️",
         "badgeColor": "#f59e0b",
-        "allowedModules": ["overview", "applications", "documents", "authority", "compliance", "alerts", "audit", "rules"],
-        "notificationsRole": "ALL"
+        "allowedModules": ["overview", "applications", "documents", "authority", "compliance", "alerts", "audit"],
+        "notificationsRole": "ALL",
+        "description": "Reviews the scrutiny record and makes the final decision within legally assigned authority. AI cannot make final decisions."
+    },
+    {
+        "id": "USR-ADMIN-06",
+        "username": "admin@aicte.gov.in",
+        "password": "aicte@admin2026",
+        "name": "Ms. Neha Sharma",
+        "role": "ADMIN",
+        "roleLabel": "System Administrator",
+        "designation": "Chief Platform & Security Administrator",
+        "organization": "AICTE e-Governance Division, New Delhi",
+        "avatar": "⚙️",
+        "badgeColor": "#8b5cf6",
+        "allowedModules": ["overview", "rules", "audit", "system_health", "users"],
+        "notificationsRole": "ADMIN",
+        "description": "Manages user accounts, permissions, configurable validation rules, system health, and audit access. No regulatory decision authority."
     }
 ]
 
@@ -458,7 +507,8 @@ USERS_DB = [
 
 @app.get("/api/v1/auth/users")
 def get_auth_users():
-    """Returns safe list of user personas for 1-click RBAC switching & login hints"""
+    """Returns safe list of human user personas for 1-click RBAC switching & login hints"""
+    # Exclude non-login background service worker from human login picker
     return [
         {
             "id": u["id"],
@@ -470,9 +520,10 @@ def get_auth_users():
             "organization": u["organization"],
             "avatar": u["avatar"],
             "badgeColor": u["badgeColor"],
-            "institutionId": u.get("institutionId")
+            "institutionId": u.get("institutionId"),
+            "description": u.get("description", "")
         }
-        for u in USERS_DB
+        for u in USERS_DB if u["role"] != "AI_ENGINE"
     ]
 
 
@@ -481,23 +532,33 @@ def login_user(payload: dict = Body(...)):
     """
     Authenticates a user either via credentials or 1-click role selection:
     Supports:
-    - { 'role': 'OFFICER' | 'INSTITUTION' | 'DIRECTOR' }
+    - { 'role': 'INSTITUTION' | 'VERIFICATION_OFFICER' | 'SCRUTINY_OFFICER' | 'COMPETENT_AUTHORITY' | 'ADMIN' }
+    - Aliases: 'OFFICER' -> 'SCRUTINY_OFFICER', 'DIRECTOR' -> 'COMPETENT_AUTHORITY'
     - { 'username': '...', 'password': '...' }
     """
     role = payload.get("role")
     username = payload.get("username")
     password = payload.get("password")
     
-    target_user = None
+    # Handle backward-compatible role aliases
     if role:
-        target_user = next((u for u in USERS_DB if u["role"].upper() == role.upper()), None)
-    elif username:
-        target_user = next((u for u in USERS_DB if u["username"].lower() == username.lower()), None)
-        if target_user and password and target_user["password"] != password:
-            raise HTTPException(status_code=401, detail="Invalid credentials for this institutional account")
+        role_up = role.upper()
+        if role_up == "OFFICER":
+            role_up = "SCRUTINY_OFFICER"
+        elif role_up == "DIRECTOR":
+            role_up = "COMPETENT_AUTHORITY"
             
-    if not target_user:
-        target_user = USERS_DB[0] # Fallback to officer
+        target_user = next((u for u in USERS_DB if u["role"] == role_up), None)
+        if not target_user:
+            raise HTTPException(status_code=404, detail="Requested role not found")
+    elif username:
+        target_user = next((u for u in USERS_DB if u["username"].lower() == username.lower().strip()), None)
+        if not target_user:
+            raise HTTPException(status_code=401, detail="No institutional account registered with this username/email")
+        if password and target_user["password"] != password.strip():
+            raise HTTPException(status_code=401, detail="Invalid password for this institutional account")
+    else:
+        raise HTTPException(status_code=400, detail="Please provide institutional username and password")
         
     safe_user = {k: v for k, v in target_user.items() if k != "password"}
     
@@ -736,37 +797,163 @@ def get_audit_trail():
 
 @app.post("/api/v1/scrutiny/record-action")
 def record_scrutiny_action(payload: dict = Body(...)):
-    """Scrutiny Modal: Records officer findings and actions into the immutable audit trail"""
+    """
+    Statutory Scrutiny & Approval Endpoint
+    Enforces Stage Separation:
+    - Scrutiny Officers may ONLY Recommend Approval, Recommend Hearing/Rejection, or Issue Deficiency Memos.
+    - Final Decisions (LoA / LoR) are EXCLUSIVELY permitted for the Competent Authority with mandatory legal rationale.
+    """
     app_id = payload.get("appId", "AICTE-2026-NRO-8841")
     action_type = payload.get("actionType", "Reviewed Document")
     observation = payload.get("observation", "Preliminary scrutiny completed.")
-    actor_role = payload.get("actorRole", "Scrutiny Officer (Demo)")
+    actor_role = payload.get("actorRole", "SCRUTINY_OFFICER")
+    statutory_rationale = payload.get("statutoryRationale", "")
+    applicable_provision = payload.get("applicableProvision", "AICTE Act 1987 / APH 2026-27")
+    
+    is_final_decision = action_type in [
+        "Grant Statutory Approval (LoA)",
+        "Reject Application (LoR)",
+        "Grant Approval",
+        "Reject Application",
+        "Final Determination"
+    ]
+    
+    # Statutory Gate: Only Competent Authority can make final regulatory determinations
+    if is_final_decision:
+        is_competent = any(kw in actor_role.upper() for kw in ["COMPETENT", "APPROVER", "DIRECTOR"])
+        if not is_competent:
+            raise HTTPException(
+                status_code=403,
+                detail="Statutory Authority Violation: Final regulatory decisions (LoA/LoR) cannot be made by Scrutiny Officers or AI. This power is restricted exclusively to the Competent Authority under the AICTE Act."
+            )
+        if not statutory_rationale:
+            statutory_rationale = "Formal regulatory determination approved pursuant to scrutiny findings and compliance verification."
     
     new_entry = {
         "id": f"AUD-{int(datetime.utcnow().timestamp()) % 10000}",
         "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
         "appId": app_id,
         "event": action_type,
-        "ruleOrSource": "Reviewer Scrutiny Terminal",
+        "ruleOrSource": applicable_provision,
         "finding": observation,
-        "actionTaken": f"Recorded: {action_type}",
+        "actionTaken": f"{action_type} - {statutory_rationale}" if statutory_rationale else f"Recorded: {action_type}",
         "actorRole": actor_role
     }
     AUDIT_TRAIL_DB.insert(0, new_entry)
     
-    # Update application status if applicable
+    # Update application status reflecting state machine progression
     for a in APPLICATIONS_DB:
         if a["id"] == app_id:
-            if action_type == "Resolved Finding":
+            if action_type in ["Grant Statutory Approval (LoA)", "Grant Approval"]:
+                a["status"] = "Approved (LoA Issued)"
+                a["pendingIssues"] = f"Statutory Approval Granted • Provision: {applicable_provision}"
+                a["stage"] = "STAGE_4_APPROVED"
+            elif action_type in ["Reject Application (LoR)", "Reject Application"]:
+                a["status"] = "Rejected (LoR Issued)"
+                a["pendingIssues"] = f"Application Rejected • Reason: {statutory_rationale}"
+                a["stage"] = "STAGE_4_REJECTED"
+            elif action_type == "Recommend Approval":
+                a["status"] = "Scrutiny Completed (Approval Recommended)"
+                a["pendingIssues"] = "Forwarded to Competent Authority for Final Determination"
+                a["stage"] = "STAGE_3_COMPLETED"
+            elif action_type == "Recommend Hearing / Re-Scrutiny":
+                a["status"] = "Standing Scrutiny Committee Hearing Recommended"
+                a["pendingIssues"] = observation
+            elif action_type == "Resolved Finding":
                 a["status"] = "Verified"
                 a["pendingIssues"] = "Resolved by Scrutiny Officer"
             elif action_type == "Mark Under Review":
                 a["status"] = "Review Required"
             elif action_type == "Flag for Physical Inspection":
                 a["status"] = "Deficient"
-                a["pendingIssues"] = "Dispatched for SAC Physical Inspection"
+                a["pendingIssues"] = "Dispatched for SAC/EVC Physical Inspection"
                 
     return {"success": True, "audit_entry": new_entry}
+
+
+@app.post("/api/v1/verification/record-result")
+def record_verification_result(payload: dict = Body(...)):
+    """
+    Role 3: Official Verification Officer endpoint
+    Records verification results against authorized issuing-authority sources.
+    Transparently badges simulation in prototype mode.
+    """
+    app_id = payload.get("appId", "AICTE-2026-NRO-8841")
+    document_id = payload.get("documentId", "DOC-01")
+    source_name = payload.get("sourceName", "DigiLocker / State Revenue Registry")
+    ref_number = payload.get("refNumber", "REF-2026-VERIF")
+    verification_status = payload.get("status", "VERIFIED") # VERIFIED, MISMATCH_DETECTED, EXPIRED, PENDING, SOURCE_UNAVAILABLE, MANUAL_REVIEW_REQUIRED
+    remarks = payload.get("remarks", "Official repository verification completed.")
+    refer_to_scrutiny = payload.get("referToScrutiny", False)
+    
+    # Valid status check
+    valid_statuses = ["VERIFIED", "MISMATCH_DETECTED", "EXPIRED", "PENDING", "SOURCE_UNAVAILABLE", "MANUAL_REVIEW_REQUIRED"]
+    if verification_status not in valid_statuses:
+        verification_status = "VERIFIED"
+        
+    audit_entry = {
+        "id": f"AUD-{int(datetime.utcnow().timestamp()) % 10000}",
+        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "appId": app_id,
+        "event": f"Verification: {verification_status}",
+        "ruleOrSource": f"[SIMULATED VERIFICATION] {source_name} (Ref: {ref_number})",
+        "finding": remarks,
+        "actionTaken": "Referred to Scrutiny Officer" if refer_to_scrutiny else f"Status Recorded: {verification_status}",
+        "actorRole": "Verification Officer (Role 3)"
+    }
+    AUDIT_TRAIL_DB.insert(0, audit_entry)
+    
+    return {
+        "success": True,
+        "is_simulated": True,
+        "simulation_notice": "Demonstration mode: Verified against mock issuing authority adapter.",
+        "verification_record": {
+            "appId": app_id,
+            "documentId": document_id,
+            "sourceName": source_name,
+            "refNumber": ref_number,
+            "status": verification_status,
+            "remarks": remarks,
+            "verifiedAt": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+        },
+        "audit_entry": audit_entry
+    }
+
+
+@app.post("/api/v1/institution/replace-document")
+def replace_institution_document(payload: dict = Body(...)):
+    """
+    Role 1: Institution User Document Replacement / Cure Upload
+    Non-destructively replaces document, maintains previous submission history, and triggers revalidation.
+    """
+    app_id = payload.get("appId", "AICTE-2026-NRO-8841")
+    doc_id = payload.get("docId", "DOC-01")
+    filename = payload.get("filename", "Cure_Undertaking.pdf")
+    cure_description = payload.get("description", "Uploaded revised undertaking addressing deficiency memo.")
+    
+    audit_entry = {
+        "id": f"AUD-{int(datetime.utcnow().timestamp()) % 10000}",
+        "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "appId": app_id,
+        "event": "Cure Document Replacement (v2)",
+        "ruleOrSource": "Institution Applicant Portal",
+        "finding": f"Replacement document uploaded for {doc_id}: {filename}. Previous submission preserved in version history.",
+        "actionTaken": "Triggered AI Re-Validation & Re-Scrutiny Queue",
+        "actorRole": "Institution User (College Principal)"
+    }
+    AUDIT_TRAIL_DB.insert(0, audit_entry)
+    
+    # Update application status
+    for a in APPLICATIONS_DB:
+        if a["id"] == app_id:
+            a["status"] = "Resubmitted (Cure Uploaded)"
+            a["pendingIssues"] = f"Cure undertaking submitted: {filename} (Awaiting Scrutiny Review)"
+            
+    return {
+        "success": True,
+        "message": "Replacement document successfully uploaded. Previous version archived. AI re-validation triggered.",
+        "audit_entry": audit_entry
+    }
 
 
 @app.get("/api/v1/metrics/evaluation-benchmarks")
@@ -1083,3 +1270,31 @@ def export_scrutiny_dossier(app_id: str):
         media_type="application/pdf",
         filename=f"AICTE_Scrutiny_Dossier_{target_app['id']}.pdf"
     )
+
+
+# ==============================================================================
+# PRAGYAN AICTE AI CHATBOT (POWERED BY GEMINI)
+# ==============================================================================
+
+from chat_service import generate_chat_response
+
+class ChatMessagePayload(BaseModel):
+    message: str
+    role: Optional[str] = "PUBLIC"
+    history: Optional[List[dict]] = []
+    context: Optional[dict] = None
+
+@app.post("/api/v1/chat")
+def handle_chat_query(payload: ChatMessagePayload):
+    """
+    AICTE Smart Scrutiny AI Chatbot Endpoint
+    Powered by Gemini with AICTE Regulatory Knowledge Base.
+    Assists applicants and officers with document validation, APH rules, deficiency cures, and portal questions.
+    """
+    return generate_chat_response(
+        query=payload.message,
+        role=payload.role or "PUBLIC",
+        history=payload.history or [],
+        context=payload.context or {}
+    )
+

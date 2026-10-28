@@ -4,7 +4,7 @@
 **Department:** Regulation Bureau<br/>
 **Problem Statement:** AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification<br/>
 **Theme:** Smart Automation<br/>
-**Branch:** `Frontend`
+**Unified deployment branch:** `main`
 
 ---
 
@@ -82,7 +82,7 @@ Clicking *"Open Scrutiny"* on any application (e.g. featured case **Apex Institu
 ## 5. Development & Running Locally
 
 ### Prerequisites
-- Node.js (v18+)
+- Node.js (v20.19+ or v22.12+)
 - npm
 
 ### Installation
@@ -105,3 +105,23 @@ npm run build
 ```bash
 npm run preview
 ```
+
+## 6. Deploying the Frontend
+
+The unified GitHub `main` branch contains both the frontend and FastAPI backend. Deploy this Vite app as a Vercel project with:
+
+| Setting | Value |
+|---|---|
+| Production Branch | `main` |
+| Root Directory | `Frontend` |
+| Framework Preset | Vite |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+Set `VITE_API_BASE_URL` in the Vercel project environment variables to the deployed backend's base URL, for example:
+
+```text
+VITE_API_BASE_URL=https://YOUR-RENDER-SERVICE.onrender.com
+```
+
+Do not append an API path or trailing slash. This value is embedded at build time, so redeploy after changing it. Deploy the backend separately; see the root [project README](../README.md#-deploy-the-full-stack-app) for the Render setup and prototype limitations.
