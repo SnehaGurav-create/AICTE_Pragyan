@@ -218,3 +218,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node & Frontend dependencies & builds
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+*.local
+.env
+.env.*
+!.env.example
+.vite/
+**/.vite/
