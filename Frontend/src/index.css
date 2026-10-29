@@ -76,6 +76,21 @@
   /* Transitions */
   --transition-smooth: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Tokens used by the shared 2D component stylesheet */
+  --bg-main: var(--bg-porcelain);
+  --surface-white: var(--surface-pure);
+  --navy-deep: var(--text-heading);
+  --primary-blue: var(--blue-electric);
+  --soft-blue: var(--blue-tint);
+  --cyan-accent: var(--blue-cyan);
+  --text-main: var(--text-primary);
+  --border-main: var(--border-light);
+  --success: var(--status-green);
+  --warning: var(--status-amber);
+  --critical: var(--status-red);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
 }
 
 /* Base Reset & Typography */

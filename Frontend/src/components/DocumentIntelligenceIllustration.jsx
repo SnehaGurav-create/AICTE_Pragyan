@@ -154,7 +154,7 @@ export function DocumentIntelligenceIllustration({ reducedMotion = false }) {
       </div>
 
       {/* Layer 3: Floating Shield-Check Badge (Top Right) */}
-      <div className="doc-floating-shield glass-surface">
+      <div className="doc-floating-shield glass-panel">
         <div className="shield-icon-wrapper">
           <svg viewBox="0 0 36 36" width="32" height="32" fill="none">
             <circle cx="18" cy="18" r="16" fill="#EAF1FF" />
@@ -181,7 +181,7 @@ export function DocumentIntelligenceIllustration({ reducedMotion = false }) {
       </div>
 
       {/* Layer 4: Floating Verification Telemetry Panel (Bottom Right) */}
-      <div className="doc-floating-telemetry glass-surface">
+      <div className="doc-floating-telemetry glass-panel">
         <div className="telemetry-top">
           <div className="telemetry-activity-dot">
             <span className="pulse-cyan" />
@@ -220,4 +220,3 @@ export function DocumentIntelligenceIllustration({ reducedMotion = false }) {
     </div>
   );
 }
-
