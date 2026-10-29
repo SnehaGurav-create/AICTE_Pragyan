@@ -2,7 +2,7 @@
    PRAGYAN-AICTE IMMERSIVE 3D SCROLL & REGULATORY DASHBOARD STYLES
    Visual Direction: Warm porcelain-white, deep navy typography, electric blue
    ========================================================================== */
-
+@import './styles/components2d.css';
 /* --------------------------------------------------------------------------
    1. PINNED 3D CINEMATIC HERO & SCROLL SEQUENCE (320vh TRACK)
    -------------------------------------------------------------------------- */
