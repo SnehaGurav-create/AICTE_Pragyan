@@ -7,7 +7,7 @@
 *Smarter scrutiny for technical institution applications, built for the AICTE Regulation Bureau.*
 
 <p align="center">
-  <a href="https://aictepragyan.vercel.app" target="_blank">
+  <a href="https://aicte-pragyan-document-validation.vercel.app/" target="_blank">
     <img
       src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=21&pause=1000&color=36BCF7&center=true&vCenter=true&width=650&lines=Click+Me;AICTE+Pragyan+Platform;Unified+Scrutiny+Intelligence"
       alt="Visit Pragyan - AICTE Pragyan Platform"
